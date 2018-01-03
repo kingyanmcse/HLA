@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">HLA配型</string>
+    <string name="confirm_button">开始匹配</string>
+    <string name="clear_button">清除重算</string>
+    <string name="tip_text">本次匹配结果为：</string>
+</resources>
