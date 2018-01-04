@@ -1,12 +1,10 @@
 package com.king.andoird.hla;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,18 +14,18 @@ public class HLAActivity extends AppCompatActivity {
     private static String[] A1 = {"1", "3", "11", "29", "36"};
     private static String[] A2 = {"2", "23", "24", "68", "69"};
     private static String[] A10 = {"25", "26", "34", "66", "19", "31", "32", "33", "74", "43"};
-//    private static String[] B5 = {B5(51), "35", "53", "78", "5", "57"};
-//    private static String[] B7 = {"7", B22(B54, B55, B56), "27", "42", "46", "67"};
-//    private static String[] B8 = {B8, B14(B64, B65), B16(B39), "78"};
-//    private static String[] B12 = {B12(B44, B45), B13, B21, (B49, B50), B40(B60, B61),"41","47"};
-//    private static String[]B17={B17(B57,B58),"63","59"};
-//    private static String[]DQ1={DR1（10）,2（15,16）,6（13,14）};
-//    private static String[]DQ2={DR3（17,18）,"7"};
-//    private static String[]DQ3={DR4,5（11,12）,"9","14"};
-//    private static String[]DQ4={"8","18"};
-//    private static String[]DRB3={DR3(17,18),5（11,,1）,6（13,14）};
-//    private static String[]DRB4={"4","7","9"};
-//    private static String[]DRB5={DR1(10),2（15,16）};
+    private static String[] B5 = {"5", "51", "35", "53", "78", "5", "57"};
+    private static String[] B7 = {"7", "22", "54", "55", "56", "27", "42", "46", "67"};
+    private static String[] B8 = {"8", "14", "64", "B65", "16", "39", "78"};
+    private static String[] B12 = {"12", "44", "45", "13", "21", "49", "50", "40", "60", "61", "41", "47"};
+    private static String[] B17 = {"17", "57", "58", "63", "59"};
+    private static String[] DQ1 = {"1", "10", "2", "15", "16", "6", "13", "14"};
+    private static String[] DQ2 = {"3", "17", "18", "7"};
+    private static String[] DQ3 = {"4", "5", "11", "12", "9", "14"};
+    private static String[] DQ4 = {"8", "18"};
+    private static String[] DRB3 = {"3", "17", "18", "5", "11", "1", "6", "13", "14"};
+    private static String[] DRB4 = {"4", "7", "9"};
+    private static String[] DRB5 = {"1", "10", "2", "15", "16"};
 
     private Button mConfirmButton;
     private Button mClearButton;
@@ -87,8 +85,27 @@ public class HLAActivity extends AppCompatActivity {
                 String a2 = mA2EditText.getText().toString();
                 String a11 = mA11EditText.getText().toString();
                 String a22 = mA22EditText.getText().toString();
-                String result = matching(a1, a2, a11, a22);
-                mResultText.setText(result);
+                int resultA = matching("A", a1, a2, a11, a22);
+
+                String b1 = mB1EditText.getText().toString();
+                String b2 = mB2EditText.getText().toString();
+                String b11 = mB11EditText.getText().toString();
+                String b22 = mB22EditText.getText().toString();
+                int resultB = matching("B", b1, b2, b11, b22);
+
+                String dq1 = mDQ1EditText.getText().toString();
+                String dq2 = mDQ2EditText.getText().toString();
+                String dq11 = mDQ11EditText.getText().toString();
+                String dq22 = mDQ22EditText.getText().toString();
+                int resultDQ = matching("DQ", dq1, dq2, dq11, dq22);
+
+                String dr1 = mDR1EditText.getText().toString();
+                String dr2 = mDR2EditText.getText().toString();
+                String dr11 = mDR11EditText.getText().toString();
+                String dr22 = mDR22EditText.getText().toString();
+                int resultDR = matching("DR", dr1, dr2, dr11, dr22);
+
+                mResultText.setText(checkAll(resultA, resultB, resultDQ, resultDR));
             }
         });
         mClearButton = findViewById(R.id.clear_button);
@@ -114,104 +131,343 @@ public class HLAActivity extends AppCompatActivity {
     }
 
     /**
-     * 匹配数据
+     * EditText获取焦点并显示软键盘
      */
-    public String matching(String a1, String a2, String a11, String a22) {
-        String result = "供受不匹配";
-        if (a1 == null || a1.length() == 0) {
-            return "请输入供体A1点位";
+    public String checkAll(int aCnt, int bCnt, int dqCnt, int drCnt) {
+        String result = "不匹配";
+        int allCount = 0;
+        if (aCnt > 0) {
+            allCount++;
         }
-        if (a2 == null || a2.length() == 0) {
-            return "请输入供体A2点位";
+        if (bCnt > 0) {
+            allCount++;
         }
-        if (a11 == null || a11.length() == 0) {
-            return "请输入受体A1点位";
+        if (dqCnt > 0) {
+            allCount++;
         }
-        if (a22 == null || a22.length() == 0) {
-            return "请输入受体A2点位";
+        if (drCnt > 0) {
+            allCount++;
         }
-
-        int a1A1Count = 0;
-        int a2A1Count = 0;
-        int a1A2Count = 0;
-        int a2A2Count = 0;
-        int a1A10Count = 0;
-        int a2A10Count = 0;
-        for (String str : A1) {
-            if (str.equals(a1) || "0".equals(a1)) {
-                a1A1Count++;
-            }
-            if (str.equals(a11) || "0".equals(a11)) {
-                a1A1Count++;
-            }
-            if (str.equals(a2) || "0".equals(a2)) {
-                a2A1Count++;
-            }
-            if (str.equals(a22) || "0".equals(a22)) {
-                a2A1Count++;
-            }
-        }
-        for (String str : A2) {
-            if (str.equals(a1) || "0".equals(a1)) {
-                a1A2Count++;
-            }
-            if (str.equals(a11) || "0".equals(a11)) {
-                a1A2Count++;
-            }
-            if (str.equals(a2) || "0".equals(a2)) {
-                a2A2Count++;
-            }
-            if (str.equals(a22) || "0".equals(a22)) {
-                a2A2Count++;
-            }
-        }
-        for (String str : A10) {
-            if (str.equals(a1) || "0".equals(a1)) {
-                a1A10Count++;
-            }
-            if (str.equals(a11) || "0".equals(a11)) {
-                a1A10Count++;
-            }
-            if (str.equals(a2) || "0".equals(a2)) {
-                a2A10Count++;
-            }
-            if (str.equals(a22) || "0".equals(a22)) {
-                a2A10Count++;
-            }
-        }
-        StringBuffer sb = new StringBuffer();
-        if (a1A1Count > 1) {
-            sb.append("A1匹配成功");
-            sb.append("\r");
-        }
-        if (a1A2Count > 1) {
-            sb.append("A2匹配成功");
-            sb.append("\r");
-        }
-        if (a1A10Count > 1) {
-            sb.append("A10匹配成功");
-            sb.append("\r");
-        }
-        if (a2A1Count > 1) {
-            if (!sb.toString().contains("A1匹配成功")) {
-                sb.append("A1匹配成功");
-            }
-        }
-        if (a2A2Count > 1) {
-            if (!sb.toString().contains("A2匹配成功")) {
-                sb.append("A2匹配成功");
-            }
-        }
-        if (a2A10Count > 1) {
-            if (!sb.toString().contains("A10匹配成功")) {
-                sb.append("A10匹配成功");
-            }
-        }
-        if (sb.toString().length() > 0) {
-            return sb.toString();
+        if (allCount == 1) {
+            result = "1点匹配";
+        } else if (allCount == 2) {
+            result = "2点匹配";
+        } else if (allCount == 3) {
+            result = "3点匹配";
+        } else if (allCount == 4) {
+            result = "完全匹配";
         }
         return result;
     }
+
+    /**
+     * 匹配A点数据,若供体抗源特异性为0，则可以匹配任意值，若受体抗源特异性维0，则只能匹配为0的供体。
+     */
+    public int matching(String type, String a1, String a2, String a11, String a22) {
+        int result = 0;
+        int a1Count = 0;
+        int a2Count = 0;
+        int b1Count = 0;
+        int b2Count = 0;
+        int dr1Count = 0;
+        int dr2Count = 0;
+        int dq1Count = 0;
+        int dq2Count = 0;
+        if ("A".equals(type)) {
+//            if (a1 == null || a1.length() == 0) {
+//                Toast.makeText(this, "请输入供体A1点位", Toast.LENGTH_SHORT)
+//                        .show();
+//            }
+//            if (a2 == null || a2.length() == 0) {
+//                Toast.makeText(this, "请输入供体A2点位", Toast.LENGTH_SHORT)
+//                        .show();
+//            }
+//            if (a11 == null || a11.length() == 0) {
+//                Toast.makeText(this, "请输入受体A1点位", Toast.LENGTH_SHORT)
+//                        .show();
+//            }
+//            if (a22 == null || a22.length() == 0) {
+//                Toast.makeText(this, "请输入受体A2点位", Toast.LENGTH_SHORT)
+//                        .show();
+//            }
+            for (String str : A1) {
+                if (str.equals(a1) || "0".equals(a1)) {
+                    a1Count++;
+                }
+                if (str.equals(a11) || ("0".equals(a11) && "0".equals(a1))) {
+                    a1Count++;
+                }
+                if (str.equals(a2) || "0".equals(a2)) {
+                    a2Count++;
+                }
+                if (str.equals(a22) || ("0".equals(a22) && "0".equals(a2))) {
+                    a2Count++;
+                }
+            }
+            for (String str : A2) {
+                if (str.equals(a1) || "0".equals(a1)) {
+                    a1Count++;
+                }
+                if (str.equals(a11) || ("0".equals(a11) && "0".equals(a1))) {
+                    a1Count++;
+                }
+                if (str.equals(a2) || "0".equals(a2)) {
+                    a2Count++;
+                }
+                if (str.equals(a22) || ("0".equals(a22) && "0".equals(a2))) {
+                    a2Count++;
+                }
+            }
+            for (String str : A10) {
+                if (str.equals(a1) || "0".equals(a1)) {
+                    a1Count++;
+                }
+                if (str.equals(a11) || ("0".equals(a11) && "0".equals(a1))) {
+                    a1Count++;
+                }
+                if (str.equals(a2) || "0".equals(a2)) {
+                    a2Count++;
+                }
+                if (str.equals(a22) || ("0".equals(a22) && "0".equals(a2))) {
+                    a2Count++;
+                }
+            }
+            if (a1Count > 1 && a2Count > 1) {
+                result = 1;
+            }
+        } else if ("B".equals(type)) {
+//            if (a1 == null || a1.length() == 0) {
+//                Toast.makeText(this, "请输入供体B1点位", Toast.LENGTH_SHORT)
+//                        .show();
+//            }
+//            if (a2 == null || a2.length() == 0) {
+//                Toast.makeText(this, "请输入供体B2点位", Toast.LENGTH_SHORT)
+//                        .show();
+//            }
+//            if (a11 == null || a11.length() == 0) {
+//                Toast.makeText(this, "请输入受体B1点位", Toast.LENGTH_SHORT)
+//                        .show();
+//            }
+//            if (a22 == null || a22.length() == 0) {
+//                Toast.makeText(this, "请输入受体B2点位", Toast.LENGTH_SHORT)
+//                        .show();
+//            }
+            for (String str : B5) {
+                if (str.equals(a1) || "0".equals(a1)) {
+                    b1Count++;
+                }
+                if (str.equals(a11) || ("0".equals(a11) && "0".equals(a1))) {
+                    b1Count++;
+                }
+                if (str.equals(a2) || "0".equals(a2)) {
+                    b2Count++;
+                }
+                if (str.equals(a22) || ("0".equals(a22) && "0".equals(a2))) {
+                    b2Count++;
+                }
+            }
+            for (String str : B7) {
+                if (str.equals(a1) || "0".equals(a1)) {
+                    b1Count++;
+                }
+                if (str.equals(a11) || ("0".equals(a11) && "0".equals(a1))) {
+                    b1Count++;
+                }
+                if (str.equals(a2) || "0".equals(a2)) {
+                    b2Count++;
+                }
+                if (str.equals(a22) || ("0".equals(a22) && "0".equals(a2))) {
+                    b2Count++;
+                }
+            }
+            for (String str : B8) {
+                if (str.equals(a1) || "0".equals(a1)) {
+                    b1Count++;
+                }
+                if (str.equals(a11) || ("0".equals(a11) && "0".equals(a1))) {
+                    b1Count++;
+                }
+                if (str.equals(a2) || "0".equals(a2)) {
+                    b2Count++;
+                }
+                if (str.equals(a22) || ("0".equals(a22) && "0".equals(a2))) {
+                    b2Count++;
+                }
+            }
+            for (String str : B12) {
+                if (str.equals(a1) || "0".equals(a1)) {
+                    b1Count++;
+                }
+                if (str.equals(a11) || ("0".equals(a11) && "0".equals(a1))) {
+                    b1Count++;
+                }
+                if (str.equals(a2) || "0".equals(a2)) {
+                    b2Count++;
+                }
+                if (str.equals(a22) || ("0".equals(a22) && "0".equals(a2))) {
+                    b2Count++;
+                }
+            }
+            for (String str : B17) {
+                if (str.equals(a1) || "0".equals(a1)) {
+                    b1Count++;
+                }
+                if (str.equals(a11) || ("0".equals(a11) && "0".equals(a1))) {
+                    b1Count++;
+                }
+                if (str.equals(a2) || "0".equals(a2)) {
+                    b2Count++;
+                }
+                if (str.equals(a22) || ("0".equals(a22) && "0".equals(a2))) {
+                    b2Count++;
+                }
+            }
+            if (b1Count > 1 && b2Count > 1) {
+                result = 1;
+            }
+        } else if ("DQ".equals(type)) {
+//            if (a1 == null || a1.length() == 0) {
+//                Toast.makeText(this, "请输入供体DQ1点位", Toast.LENGTH_SHORT)
+//                        .show();
+//            }
+//            if (a2 == null || a2.length() == 0) {
+//                Toast.makeText(this, "请输入供体DQ2点位", Toast.LENGTH_SHORT)
+//                        .show();
+//            }
+//            if (a11 == null || a11.length() == 0) {
+//                Toast.makeText(this, "请输入受体DQ1点位", Toast.LENGTH_SHORT)
+//                        .show();
+//            }
+//            if (a22 == null || a22.length() == 0) {
+//                Toast.makeText(this, "请输入受体DQ2点位", Toast.LENGTH_SHORT)
+//                        .show();
+//            }
+            for (String str : DQ1) {
+                if (str.equals(a1) || "0".equals(a1)) {
+                    dq1Count++;
+                }
+                if (str.equals(a11) || ("0".equals(a11) && "0".equals(a1))) {
+                    dq1Count++;
+                }
+                if (str.equals(a2) || "0".equals(a2)) {
+                    dq2Count++;
+                }
+                if (str.equals(a22) || ("0".equals(a22) && "0".equals(a2))) {
+                    dq2Count++;
+                }
+            }
+            for (String str : DQ2) {
+                if (str.equals(a1) || "0".equals(a1)) {
+                    dq1Count++;
+                }
+                if (str.equals(a11) || ("0".equals(a11) && "0".equals(a1))) {
+                    dq1Count++;
+                }
+                if (str.equals(a2) || "0".equals(a2)) {
+                    dq2Count++;
+                }
+                if (str.equals(a22) || ("0".equals(a22) && "0".equals(a2))) {
+                    dq2Count++;
+                }
+            }
+            for (String str : DQ3) {
+                if (str.equals(a1) || "0".equals(a1)) {
+                    dq1Count++;
+                }
+                if (str.equals(a11) || ("0".equals(a11) && "0".equals(a1))) {
+                    dq1Count++;
+                }
+                if (str.equals(a2) || "0".equals(a2)) {
+                    dq2Count++;
+                }
+                if (str.equals(a22) || ("0".equals(a22) && "0".equals(a2))) {
+                    dq2Count++;
+                }
+            }
+            for (String str : DQ4) {
+                if (str.equals(a1) || "0".equals(a1)) {
+                    dq1Count++;
+                }
+                if (str.equals(a11) || ("0".equals(a11) && "0".equals(a1))) {
+                    dq1Count++;
+                }
+                if (str.equals(a2) || "0".equals(a2)) {
+                    dq2Count++;
+                }
+                if (str.equals(a22) || ("0".equals(a22) && "0".equals(a2))) {
+                    dq2Count++;
+                }
+            }
+            if (dq1Count > 1 && dq2Count > 1) {
+                result = 1;
+            }
+        } else if ("DR".equals(type)) {
+//            if (a1 == null || a1.length() == 0) {
+//                Toast.makeText(this, "请输入供体DR1点位", Toast.LENGTH_SHORT)
+//                        .show();
+//            }
+//            if (a2 == null || a2.length() == 0) {
+//                Toast.makeText(this, "请输入供体DR2点位", Toast.LENGTH_SHORT)
+//                        .show();
+//            }
+//            if (a11 == null || a11.length() == 0) {
+//                Toast.makeText(this, "请输入受体DR1点位", Toast.LENGTH_SHORT)
+//                        .show();
+//            }
+//            if (a22 == null || a22.length() == 0) {
+//                Toast.makeText(this, "请输入受体DR2点位", Toast.LENGTH_SHORT)
+//                        .show();
+//            }
+            for (String str : DRB3) {
+                if (str.equals(a1) || "0".equals(a1)) {
+                    dr1Count++;
+                }
+                if (str.equals(a11) || ("0".equals(a11) && "0".equals(a1))) {
+                    dr1Count++;
+                }
+                if (str.equals(a2) || "0".equals(a2)) {
+                    dr2Count++;
+                }
+                if (str.equals(a22) || ("0".equals(a22) && "0".equals(a2))) {
+                    dr2Count++;
+                }
+            }
+            for (String str : DRB4) {
+                if (str.equals(a1) || "0".equals(a1)) {
+                    dr1Count++;
+                }
+                if (str.equals(a11) || ("0".equals(a11) && "0".equals(a1))) {
+                    dr1Count++;
+                }
+                if (str.equals(a2) || "0".equals(a2)) {
+                    dr2Count++;
+                }
+                if (str.equals(a22) || ("0".equals(a22) && "0".equals(a2))) {
+                    dr2Count++;
+                }
+            }
+            for (String str : DRB5) {
+                if (str.equals(a1) || "0".equals(a1)) {
+                    dr1Count++;
+                }
+                if (str.equals(a11) || ("0".equals(a11) && "0".equals(a1))) {
+                    dr1Count++;
+                }
+                if (str.equals(a2) || "0".equals(a2)) {
+                    dr2Count++;
+                }
+                if (str.equals(a22) || ("0".equals(a22) && "0".equals(a2))) {
+                    dr2Count++;
+                }
+            }
+            if (dr1Count > 1 && dr2Count > 1) {
+                result = 1;
+            }
+        }
+
+        return result;
+    }
+
 
     /**
      * 清除输入框
@@ -237,4 +493,5 @@ public class HLAActivity extends AppCompatActivity {
 
         mResultText.setText("");
     }
+
 }
