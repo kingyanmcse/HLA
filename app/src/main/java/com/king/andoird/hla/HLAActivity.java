@@ -19,6 +19,9 @@ public class HLAActivity extends AppCompatActivity {
     private static String[] B8 = {"8", "14", "64", "B65", "16", "39", "78"};
     private static String[] B12 = {"12", "44", "45", "13", "21", "49", "50", "40", "60", "61", "41", "47"};
     private static String[] B17 = {"17", "57", "58", "63", "59"};
+    private static String[] BW4 = {"9", "23", "24", "25", "32", "5", "51", "52", "12", "13", "17", "57", "58", "21", "49", "27", "37", "38", "47", "53", "59", "63", "77"};
+    private static String[] BW6 = {"11", "7", "8", "18", "14", "64", "65", "15", "62", "75", "76", "78", "16", "39", "22", "54", "55", "56", "35", "40", "B60", "61", "48", "4005", "41", "42", "45", "46", "50", "67", "70", "71", "72"};
+
     private static String[] DQ1 = {"1", "10", "2", "15", "16", "6", "13", "14"};
     private static String[] DQ2 = {"3", "17", "18", "7"};
     private static String[] DQ3 = {"4", "5", "11", "12", "9", "14"};
@@ -112,11 +115,18 @@ public class HLAActivity extends AppCompatActivity {
         mClearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clearEditText();
-                showSoftInputFromWindow(HLAActivity.this, mA1EditText);
+                clearEditText(1);
+                showSoftInputFromWindow(HLAActivity.this, mA11EditText);
             }
         });
-
+        mClearButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                clearEditText(2);
+                showSoftInputFromWindow(HLAActivity.this, mA1EditText);
+                return true;
+            }
+        });
     }
 
     /**
@@ -161,7 +171,7 @@ public class HLAActivity extends AppCompatActivity {
     }
 
     /**
-     * 匹配A点数据,若供体抗源特异性为0，则可以匹配任意值，若受体抗源特异性维0，则只能匹配为0的供体。
+     * 匹配A点数据,若供体抗源特异性为0,则可以匹配任意值,若受体抗源特异性维0,则只能匹配为0的供体。
      */
     public int matching(String type, String a1, String a2, String a11, String a22) {
         int result = 0;
@@ -191,44 +201,44 @@ public class HLAActivity extends AppCompatActivity {
 //                        .show();
 //            }
             for (String str : A1) {
-                if (str.equals(a1) || "0".equals(a1)) {
+                if (str.equals(a1)) {
                     a1Count++;
                 }
-                if (str.equals(a11) || ("0".equals(a11) && "0".equals(a1))) {
+                if (str.equals(a11)) {
                     a1Count++;
                 }
-                if (str.equals(a2) || "0".equals(a2)) {
+                if (str.equals(a2)) {
                     a2Count++;
                 }
-                if (str.equals(a22) || ("0".equals(a22) && "0".equals(a2))) {
+                if (str.equals(a22)) {
                     a2Count++;
                 }
             }
             for (String str : A2) {
-                if (str.equals(a1) || "0".equals(a1)) {
+                if (str.equals(a1)) {
                     a1Count++;
                 }
-                if (str.equals(a11) || ("0".equals(a11) && "0".equals(a1))) {
+                if (str.equals(a11)) {
                     a1Count++;
                 }
-                if (str.equals(a2) || "0".equals(a2)) {
+                if (str.equals(a2)) {
                     a2Count++;
                 }
-                if (str.equals(a22) || ("0".equals(a22) && "0".equals(a2))) {
+                if (str.equals(a22)) {
                     a2Count++;
                 }
             }
             for (String str : A10) {
-                if (str.equals(a1) || "0".equals(a1)) {
+                if (str.equals(a1)) {
                     a1Count++;
                 }
-                if (str.equals(a11) || ("0".equals(a11) && "0".equals(a1))) {
+                if (str.equals(a11)) {
                     a1Count++;
                 }
-                if (str.equals(a2) || "0".equals(a2)) {
+                if (str.equals(a2)) {
                     a2Count++;
                 }
-                if (str.equals(a22) || ("0".equals(a22) && "0".equals(a2))) {
+                if (str.equals(a22)) {
                     a2Count++;
                 }
             }
@@ -253,72 +263,100 @@ public class HLAActivity extends AppCompatActivity {
 //                        .show();
 //            }
             for (String str : B5) {
-                if (str.equals(a1) || "0".equals(a1)) {
+                if (str.equals(a1)) {
                     b1Count++;
                 }
-                if (str.equals(a11) || ("0".equals(a11) && "0".equals(a1))) {
+                if (str.equals(a11)) {
                     b1Count++;
                 }
-                if (str.equals(a2) || "0".equals(a2)) {
+                if (str.equals(a2)) {
                     b2Count++;
                 }
-                if (str.equals(a22) || ("0".equals(a22) && "0".equals(a2))) {
+                if (str.equals(a22)) {
                     b2Count++;
                 }
             }
             for (String str : B7) {
-                if (str.equals(a1) || "0".equals(a1)) {
+                if (str.equals(a1)) {
                     b1Count++;
                 }
-                if (str.equals(a11) || ("0".equals(a11) && "0".equals(a1))) {
+                if (str.equals(a11)) {
                     b1Count++;
                 }
-                if (str.equals(a2) || "0".equals(a2)) {
+                if (str.equals(a2)) {
                     b2Count++;
                 }
-                if (str.equals(a22) || ("0".equals(a22) && "0".equals(a2))) {
+                if (str.equals(a22)) {
                     b2Count++;
                 }
             }
             for (String str : B8) {
-                if (str.equals(a1) || "0".equals(a1)) {
+                if (str.equals(a1)) {
                     b1Count++;
                 }
-                if (str.equals(a11) || ("0".equals(a11) && "0".equals(a1))) {
+                if (str.equals(a11)) {
                     b1Count++;
                 }
-                if (str.equals(a2) || "0".equals(a2)) {
+                if (str.equals(a2)) {
                     b2Count++;
                 }
-                if (str.equals(a22) || ("0".equals(a22) && "0".equals(a2))) {
+                if (str.equals(a22)) {
                     b2Count++;
                 }
             }
             for (String str : B12) {
-                if (str.equals(a1) || "0".equals(a1)) {
+                if (str.equals(a1)) {
                     b1Count++;
                 }
-                if (str.equals(a11) || ("0".equals(a11) && "0".equals(a1))) {
+                if (str.equals(a11)) {
                     b1Count++;
                 }
-                if (str.equals(a2) || "0".equals(a2)) {
+                if (str.equals(a2)) {
                     b2Count++;
                 }
-                if (str.equals(a22) || ("0".equals(a22) && "0".equals(a2))) {
+                if (str.equals(a22)) {
                     b2Count++;
                 }
             }
             for (String str : B17) {
-                if (str.equals(a1) || "0".equals(a1)) {
+                if (str.equals(a1)) {
                     b1Count++;
                 }
-                if (str.equals(a11) || ("0".equals(a11) && "0".equals(a1))) {
+                if (str.equals(a11)) {
                     b1Count++;
                 }
-                if (str.equals(a2) || "0".equals(a2)) {
+                if (str.equals(a2)) {
                     b2Count++;
                 }
-                if (str.equals(a22) || ("0".equals(a22) && "0".equals(a2))) {
+                if (str.equals(a22)) {
+                    b2Count++;
+                }
+            }
+            for (String str : BW4) {
+                if (str.equals(a1)) {
+                    b1Count++;
+                }
+                if (str.equals(a11)) {
+                    b1Count++;
+                }
+                if (str.equals(a2)) {
+                    b2Count++;
+                }
+                if (str.equals(a22)) {
+                    b2Count++;
+                }
+            }
+            for (String str : BW6) {
+                if (str.equals(a1)) {
+                    b1Count++;
+                }
+                if (str.equals(a11)) {
+                    b1Count++;
+                }
+                if (str.equals(a2)) {
+                    b2Count++;
+                }
+                if (str.equals(a22)) {
                     b2Count++;
                 }
             }
@@ -343,58 +381,58 @@ public class HLAActivity extends AppCompatActivity {
 //                        .show();
 //            }
             for (String str : DQ1) {
-                if (str.equals(a1) || "0".equals(a1)) {
+                if (str.equals(a1)) {
                     dq1Count++;
                 }
-                if (str.equals(a11) || ("0".equals(a11) && "0".equals(a1))) {
+                if (str.equals(a11)) {
                     dq1Count++;
                 }
-                if (str.equals(a2) || "0".equals(a2)) {
+                if (str.equals(a2)) {
                     dq2Count++;
                 }
-                if (str.equals(a22) || ("0".equals(a22) && "0".equals(a2))) {
+                if (str.equals(a22)) {
                     dq2Count++;
                 }
             }
             for (String str : DQ2) {
-                if (str.equals(a1) || "0".equals(a1)) {
+                if (str.equals(a1)) {
                     dq1Count++;
                 }
-                if (str.equals(a11) || ("0".equals(a11) && "0".equals(a1))) {
+                if (str.equals(a11)) {
                     dq1Count++;
                 }
-                if (str.equals(a2) || "0".equals(a2)) {
+                if (str.equals(a2)) {
                     dq2Count++;
                 }
-                if (str.equals(a22) || ("0".equals(a22) && "0".equals(a2))) {
+                if (str.equals(a22)) {
                     dq2Count++;
                 }
             }
             for (String str : DQ3) {
-                if (str.equals(a1) || "0".equals(a1)) {
+                if (str.equals(a1)) {
                     dq1Count++;
                 }
-                if (str.equals(a11) || ("0".equals(a11) && "0".equals(a1))) {
+                if (str.equals(a11)) {
                     dq1Count++;
                 }
-                if (str.equals(a2) || "0".equals(a2)) {
+                if (str.equals(a2)) {
                     dq2Count++;
                 }
-                if (str.equals(a22) || ("0".equals(a22) && "0".equals(a2))) {
+                if (str.equals(a22)) {
                     dq2Count++;
                 }
             }
             for (String str : DQ4) {
-                if (str.equals(a1) || "0".equals(a1)) {
+                if (str.equals(a1)) {
                     dq1Count++;
                 }
-                if (str.equals(a11) || ("0".equals(a11) && "0".equals(a1))) {
+                if (str.equals(a11)) {
                     dq1Count++;
                 }
-                if (str.equals(a2) || "0".equals(a2)) {
+                if (str.equals(a2)) {
                     dq2Count++;
                 }
-                if (str.equals(a22) || ("0".equals(a22) && "0".equals(a2))) {
+                if (str.equals(a22)) {
                     dq2Count++;
                 }
             }
@@ -419,44 +457,44 @@ public class HLAActivity extends AppCompatActivity {
 //                        .show();
 //            }
             for (String str : DRB3) {
-                if (str.equals(a1) || "0".equals(a1)) {
+                if (str.equals(a1)) {
                     dr1Count++;
                 }
-                if (str.equals(a11) || ("0".equals(a11) && "0".equals(a1))) {
+                if (str.equals(a11)) {
                     dr1Count++;
                 }
-                if (str.equals(a2) || "0".equals(a2)) {
+                if (str.equals(a2)) {
                     dr2Count++;
                 }
-                if (str.equals(a22) || ("0".equals(a22) && "0".equals(a2))) {
+                if (str.equals(a22)) {
                     dr2Count++;
                 }
             }
             for (String str : DRB4) {
-                if (str.equals(a1) || "0".equals(a1)) {
+                if (str.equals(a1)) {
                     dr1Count++;
                 }
-                if (str.equals(a11) || ("0".equals(a11) && "0".equals(a1))) {
+                if (str.equals(a11)) {
                     dr1Count++;
                 }
-                if (str.equals(a2) || "0".equals(a2)) {
+                if (str.equals(a2)) {
                     dr2Count++;
                 }
-                if (str.equals(a22) || ("0".equals(a22) && "0".equals(a2))) {
+                if (str.equals(a22)) {
                     dr2Count++;
                 }
             }
             for (String str : DRB5) {
-                if (str.equals(a1) || "0".equals(a1)) {
+                if (str.equals(a1)) {
                     dr1Count++;
                 }
-                if (str.equals(a11) || ("0".equals(a11) && "0".equals(a1))) {
+                if (str.equals(a11)) {
                     dr1Count++;
                 }
-                if (str.equals(a2) || "0".equals(a2)) {
+                if (str.equals(a2)) {
                     dr2Count++;
                 }
-                if (str.equals(a22) || ("0".equals(a22) && "0".equals(a2))) {
+                if (str.equals(a22)) {
                     dr2Count++;
                 }
             }
@@ -470,18 +508,19 @@ public class HLAActivity extends AppCompatActivity {
 
 
     /**
-     * 清除输入框
+     * 清除输入框(单点只清除受体，长按则全清除)
      */
-    public void clearEditText() {
-        mA1EditText.setText("");
-        mA2EditText.setText("");
-        mB1EditText.setText("");
-        mB2EditText.setText("");
-        mDR1EditText.setText("");
-        mDR2EditText.setText("");
-        mDQ1EditText.setText("");
-        mDQ2EditText.setText("");
-
+    public void clearEditText(int type) {
+        if (type == 2) {
+            mA1EditText.setText("");
+            mA2EditText.setText("");
+            mB1EditText.setText("");
+            mB2EditText.setText("");
+            mDR1EditText.setText("");
+            mDR2EditText.setText("");
+            mDQ1EditText.setText("");
+            mDQ2EditText.setText("");
+        }
         mA11EditText.setText("");
         mA22EditText.setText("");
         mB11EditText.setText("");
