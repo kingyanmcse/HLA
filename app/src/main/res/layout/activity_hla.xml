@@ -21,7 +21,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
-                android:text="供体"
+                android:text="@string/st_text"
                 android:textSize="30dp" />
 
             <LinearLayout
@@ -195,7 +195,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
-                android:text="受体"
+                android:text="@string/gt_text"
                 android:textSize="30dp" />
 
             <LinearLayout

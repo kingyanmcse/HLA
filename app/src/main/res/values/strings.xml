@@ -3,4 +3,6 @@
     <string name="confirm_button">开始匹配</string>
     <string name="clear_button">清除重算</string>
     <string name="tip_text">本次匹配结果为：</string>
+    <string name="gt_text">供体</string>
+    <string name="st_text">受体</string>
 </resources>
