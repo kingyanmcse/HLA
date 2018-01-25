@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipToPadding="true"
     android:fillViewport="true"
     tools:context="com.king.andoird.hla.HLAActivity">
 
@@ -218,7 +217,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/dr2_edittext"
                     app:layout_constraintStart_toEndOf="@+id/dr1_edittext"
-                    app:layout_constraintTop_toBottomOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
                     android:id="@+id/dr2_edittext"
@@ -443,7 +442,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/b22_edittext"
                     app:layout_constraintStart_toEndOf="@+id/b11_edittext"
-                    app:layout_constraintTop_toBottomOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
                     android:id="@+id/b22_edittext"
