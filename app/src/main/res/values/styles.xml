@@ -6,6 +6,12 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="actionOverflowMenuStyle">@style/optionMenu</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="optionMenu" parent="Widget.AppCompat.ActionBar">
+        <item name="android:popupBackground">@color/colorPrimary</item>
     </style>
 
 </resources>

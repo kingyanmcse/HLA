@@ -5,4 +5,8 @@
     <string name="tip_text">本次匹配结果为：</string>
     <string name="gt_text">供体</string>
     <string name="st_text">受体</string>
+    <string name="about">关于</string>
+    <string name="ok">确定</string>
+    <string name="about_text">HLA配型(Version 1.0)</string>
+    <string name="me_text">KingYan</string>
 </resources>
