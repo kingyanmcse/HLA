@@ -1,10 +1,12 @@
 package com.king.andoird.hla;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -84,6 +86,11 @@ public class HLAActivity extends AppCompatActivity {
         mConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(),
+                            0);
+                }
                 String a1 = mA1EditText.getText().toString();
                 String a2 = mA2EditText.getText().toString();
                 String a11 = mA11EditText.getText().toString();
@@ -152,10 +159,10 @@ public class HLAActivity extends AppCompatActivity {
         if (bCnt > 0) {
             allCount++;
         }
-        if (dqCnt > 0) {
+        if (drCnt > 0) {
             allCount++;
         }
-        if (drCnt > 0) {
+        if (dqCnt > 0) {
             allCount++;
         }
         if (allCount == 1) {
@@ -175,334 +182,140 @@ public class HLAActivity extends AppCompatActivity {
      */
     public int matching(String type, String a1, String a2, String a11, String a22) {
         int result = 0;
-        int a1Count = 0;
-        int a2Count = 0;
-        int b1Count = 0;
-        int b2Count = 0;
-        int dr1Count = 0;
-        int dr2Count = 0;
-        int dq1Count = 0;
-        int dq2Count = 0;
         if ("A".equals(type)) {
-//            if (a1 == null || a1.length() == 0) {
-//                Toast.makeText(this, "请输入供体A1点位", Toast.LENGTH_SHORT)
-//                        .show();
-//            }
-//            if (a2 == null || a2.length() == 0) {
-//                Toast.makeText(this, "请输入供体A2点位", Toast.LENGTH_SHORT)
-//                        .show();
-//            }
-//            if (a11 == null || a11.length() == 0) {
-//                Toast.makeText(this, "请输入受体A1点位", Toast.LENGTH_SHORT)
-//                        .show();
-//            }
-//            if (a22 == null || a22.length() == 0) {
-//                Toast.makeText(this, "请输入受体A2点位", Toast.LENGTH_SHORT)
-//                        .show();
-//            }
-            for (String str : A1) {
-                if (str.equals(a1)) {
-                    a1Count++;
+            if (isNotEmpty(a1) && isNotEmpty(a11)) {
+                int count1 = 0;
+                int count2 = 0;
+                for (String str : A1) {
+                    count1 = count(str, a1, a11, count1);
+                    count2 = count(str, a2, a22, count2);
                 }
-                if (str.equals(a11)) {
-                    a1Count++;
+                count1 = resetZero(count1);
+                count2 = resetZero(count2);
+                for (String str : A2) {
+                    count1 = count(str, a1, a11, count1);
+                    count2 = count(str, a2, a22, count2);
                 }
-                if (str.equals(a2)) {
-                    a2Count++;
+                count1 = resetZero(count1);
+                count2 = resetZero(count2);
+                for (String str : A10) {
+                    count1 = count(str, a1, a11, count1);
+                    count2 = count(str, a2, a22, count2);
                 }
-                if (str.equals(a22)) {
-                    a2Count++;
+                count1 = resetZero(count1);
+                count2 = resetZero(count2);
+                if (count1 != 0 && count2 != 0) {
+                    result = getResult(count1, count2);
                 }
-            }
-            for (String str : A2) {
-                if (str.equals(a1)) {
-                    a1Count++;
-                }
-                if (str.equals(a11)) {
-                    a1Count++;
-                }
-                if (str.equals(a2)) {
-                    a2Count++;
-                }
-                if (str.equals(a22)) {
-                    a2Count++;
-                }
-            }
-            for (String str : A10) {
-                if (str.equals(a1)) {
-                    a1Count++;
-                }
-                if (str.equals(a11)) {
-                    a1Count++;
-                }
-                if (str.equals(a2)) {
-                    a2Count++;
-                }
-                if (str.equals(a22)) {
-                    a2Count++;
-                }
-            }
-            if (a1Count > 1 && a2Count > 1) {
-                result = 1;
             }
         } else if ("B".equals(type)) {
-//            if (a1 == null || a1.length() == 0) {
-//                Toast.makeText(this, "请输入供体B1点位", Toast.LENGTH_SHORT)
-//                        .show();
-//            }
-//            if (a2 == null || a2.length() == 0) {
-//                Toast.makeText(this, "请输入供体B2点位", Toast.LENGTH_SHORT)
-//                        .show();
-//            }
-//            if (a11 == null || a11.length() == 0) {
-//                Toast.makeText(this, "请输入受体B1点位", Toast.LENGTH_SHORT)
-//                        .show();
-//            }
-//            if (a22 == null || a22.length() == 0) {
-//                Toast.makeText(this, "请输入受体B2点位", Toast.LENGTH_SHORT)
-//                        .show();
-//            }
-            for (String str : B5) {
-                if (str.equals(a1)) {
-                    b1Count++;
+            if (isNotEmpty(a1) && isNotEmpty(a11)) {
+                int count1 = 0;
+                int count2 = 0;
+                for (String str : B5) {
+                    count1 = count(str, a1, a11, count1);
+                    count2 = count(str, a2, a22, count2);
                 }
-                if (str.equals(a11)) {
-                    b1Count++;
+                count1 = resetZero(count1);
+                count2 = resetZero(count2);
+                for (String str : B7) {
+                    count1 = count(str, a1, a11, count1);
+                    count2 = count(str, a2, a22, count2);
                 }
-                if (str.equals(a2)) {
-                    b2Count++;
+                count1 = resetZero(count1);
+                count2 = resetZero(count2);
+                for (String str : B8) {
+                    count1 = count(str, a1, a11, count1);
+                    count2 = count(str, a2, a22, count2);
                 }
-                if (str.equals(a22)) {
-                    b2Count++;
+                count1 = resetZero(count1);
+                count2 = resetZero(count2);
+                for (String str : B12) {
+                    count1 = count(str, a1, a11, count1);
+                    count2 = count(str, a2, a22, count2);
                 }
-            }
-            for (String str : B7) {
-                if (str.equals(a1)) {
-                    b1Count++;
+                count1 = resetZero(count1);
+                count2 = resetZero(count2);
+                for (String str : B17) {
+                    count1 = count(str, a1, a11, count1);
+                    count2 = count(str, a2, a22, count2);
                 }
-                if (str.equals(a11)) {
-                    b1Count++;
+                count1 = resetZero(count1);
+                count2 = resetZero(count2);
+                for (String str : BW4) {
+                    count1 = count(str, a1, a11, count1);
+                    count2 = count(str, a2, a22, count2);
                 }
-                if (str.equals(a2)) {
-                    b2Count++;
+                count1 = resetZero(count1);
+                count2 = resetZero(count2);
+                for (String str : BW6) {
+                    count1 = count(str, a1, a11, count1);
+                    count2 = count(str, a2, a22, count2);
                 }
-                if (str.equals(a22)) {
-                    b2Count++;
+                count1 = resetZero(count1);
+                count2 = resetZero(count2);
+
+                if (count1 != 0 && count2 != 0) {
+                    result = getResult(count1, count2);
                 }
-            }
-            for (String str : B8) {
-                if (str.equals(a1)) {
-                    b1Count++;
-                }
-                if (str.equals(a11)) {
-                    b1Count++;
-                }
-                if (str.equals(a2)) {
-                    b2Count++;
-                }
-                if (str.equals(a22)) {
-                    b2Count++;
-                }
-            }
-            for (String str : B12) {
-                if (str.equals(a1)) {
-                    b1Count++;
-                }
-                if (str.equals(a11)) {
-                    b1Count++;
-                }
-                if (str.equals(a2)) {
-                    b2Count++;
-                }
-                if (str.equals(a22)) {
-                    b2Count++;
-                }
-            }
-            for (String str : B17) {
-                if (str.equals(a1)) {
-                    b1Count++;
-                }
-                if (str.equals(a11)) {
-                    b1Count++;
-                }
-                if (str.equals(a2)) {
-                    b2Count++;
-                }
-                if (str.equals(a22)) {
-                    b2Count++;
-                }
-            }
-            for (String str : BW4) {
-                if (str.equals(a1)) {
-                    b1Count++;
-                }
-                if (str.equals(a11)) {
-                    b1Count++;
-                }
-                if (str.equals(a2)) {
-                    b2Count++;
-                }
-                if (str.equals(a22)) {
-                    b2Count++;
-                }
-            }
-            for (String str : BW6) {
-                if (str.equals(a1)) {
-                    b1Count++;
-                }
-                if (str.equals(a11)) {
-                    b1Count++;
-                }
-                if (str.equals(a2)) {
-                    b2Count++;
-                }
-                if (str.equals(a22)) {
-                    b2Count++;
-                }
-            }
-            if (b1Count > 1 && b2Count > 1) {
-                result = 1;
             }
         } else if ("DQ".equals(type)) {
-//            if (a1 == null || a1.length() == 0) {
-//                Toast.makeText(this, "请输入供体DQ1点位", Toast.LENGTH_SHORT)
-//                        .show();
-//            }
-//            if (a2 == null || a2.length() == 0) {
-//                Toast.makeText(this, "请输入供体DQ2点位", Toast.LENGTH_SHORT)
-//                        .show();
-//            }
-//            if (a11 == null || a11.length() == 0) {
-//                Toast.makeText(this, "请输入受体DQ1点位", Toast.LENGTH_SHORT)
-//                        .show();
-//            }
-//            if (a22 == null || a22.length() == 0) {
-//                Toast.makeText(this, "请输入受体DQ2点位", Toast.LENGTH_SHORT)
-//                        .show();
-//            }
-            for (String str : DQ1) {
-                if (str.equals(a1)) {
-                    dq1Count++;
+            if (isNotEmpty(a1) && isNotEmpty(a11)) {
+                int count1 = 0;
+                int count2 = 0;
+                for (String str : DQ1) {
+                    count1 = count(str, a1, a11, count1);
+                    count2 = count(str, a2, a22, count2);
                 }
-                if (str.equals(a11)) {
-                    dq1Count++;
+                count1 = resetZero(count1);
+                count2 = resetZero(count2);
+                for (String str : DQ2) {
+                    count1 = count(str, a1, a11, count1);
+                    count2 = count(str, a2, a22, count2);
                 }
-                if (str.equals(a2)) {
-                    dq2Count++;
+                count1 = resetZero(count1);
+                count2 = resetZero(count2);
+                for (String str : DQ3) {
+                    count1 = count(str, a1, a11, count1);
+                    count2 = count(str, a2, a22, count2);
                 }
-                if (str.equals(a22)) {
-                    dq2Count++;
+                count1 = resetZero(count1);
+                count2 = resetZero(count2);
+                for (String str : DQ4) {
+                    count1 = count(str, a1, a11, count1);
+                    count2 = count(str, a2, a22, count2);
                 }
-            }
-            for (String str : DQ2) {
-                if (str.equals(a1)) {
-                    dq1Count++;
+                if (count1 != 0 && count2 != 0) {
+                    result = getResult(count1, count2);
                 }
-                if (str.equals(a11)) {
-                    dq1Count++;
-                }
-                if (str.equals(a2)) {
-                    dq2Count++;
-                }
-                if (str.equals(a22)) {
-                    dq2Count++;
-                }
-            }
-            for (String str : DQ3) {
-                if (str.equals(a1)) {
-                    dq1Count++;
-                }
-                if (str.equals(a11)) {
-                    dq1Count++;
-                }
-                if (str.equals(a2)) {
-                    dq2Count++;
-                }
-                if (str.equals(a22)) {
-                    dq2Count++;
-                }
-            }
-            for (String str : DQ4) {
-                if (str.equals(a1)) {
-                    dq1Count++;
-                }
-                if (str.equals(a11)) {
-                    dq1Count++;
-                }
-                if (str.equals(a2)) {
-                    dq2Count++;
-                }
-                if (str.equals(a22)) {
-                    dq2Count++;
-                }
-            }
-            if (dq1Count > 1 && dq2Count > 1) {
-                result = 1;
             }
         } else if ("DR".equals(type)) {
-//            if (a1 == null || a1.length() == 0) {
-//                Toast.makeText(this, "请输入供体DR1点位", Toast.LENGTH_SHORT)
-//                        .show();
-//            }
-//            if (a2 == null || a2.length() == 0) {
-//                Toast.makeText(this, "请输入供体DR2点位", Toast.LENGTH_SHORT)
-//                        .show();
-//            }
-//            if (a11 == null || a11.length() == 0) {
-//                Toast.makeText(this, "请输入受体DR1点位", Toast.LENGTH_SHORT)
-//                        .show();
-//            }
-//            if (a22 == null || a22.length() == 0) {
-//                Toast.makeText(this, "请输入受体DR2点位", Toast.LENGTH_SHORT)
-//                        .show();
-//            }
-            for (String str : DRB3) {
-                if (str.equals(a1)) {
-                    dr1Count++;
+            if (isNotEmpty(a1) && isNotEmpty(a11)) {
+                int count1 = 0;
+                int count2 = 0;
+                for (String str : DRB3) {
+                    count1 = count(str, a1, a11, count1);
+                    count2 = count(str, a2, a22, count2);
                 }
-                if (str.equals(a11)) {
-                    dr1Count++;
+                count1 = resetZero(count1);
+                count2 = resetZero(count2);
+                for (String str : DRB4) {
+                    count1 = count(str, a1, a11, count1);
+                    count2 = count(str, a2, a22, count2);
                 }
-                if (str.equals(a2)) {
-                    dr2Count++;
+                count1 = resetZero(count1);
+                count2 = resetZero(count2);
+                for (String str : DRB5) {
+                    count1 = count(str, a1, a11, count1);
+                    count2 = count(str, a2, a22, count2);
                 }
-                if (str.equals(a22)) {
-                    dr2Count++;
+                count1 = resetZero(count1);
+                count2 = resetZero(count2);
+                if (count1 != 0 && count2 != 0) {
+                    result = getResult(count1, count2);
                 }
-            }
-            for (String str : DRB4) {
-                if (str.equals(a1)) {
-                    dr1Count++;
-                }
-                if (str.equals(a11)) {
-                    dr1Count++;
-                }
-                if (str.equals(a2)) {
-                    dr2Count++;
-                }
-                if (str.equals(a22)) {
-                    dr2Count++;
-                }
-            }
-            for (String str : DRB5) {
-                if (str.equals(a1)) {
-                    dr1Count++;
-                }
-                if (str.equals(a11)) {
-                    dr1Count++;
-                }
-                if (str.equals(a2)) {
-                    dr2Count++;
-                }
-                if (str.equals(a22)) {
-                    dr2Count++;
-                }
-            }
-            if (dr1Count > 1 && dr2Count > 1) {
-                result = 1;
             }
         }
-
         return result;
     }
 
@@ -533,4 +346,49 @@ public class HLAActivity extends AppCompatActivity {
         mResultText.setText("");
     }
 
+    private boolean isEmpty(String str) {
+        if (str == null || str.trim().length() == 0) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isNotEmpty(String str) {
+        return !isEmpty(str);
+    }
+
+    private int count(String str, String a1, String a11, int count) {
+        if (str.equals(a1) || str.equals(a11)) {
+            return count + 1;
+        }
+        return count;
+    }
+
+    //奇数判断
+    public boolean isOdd(int a) {
+        if ((a & 1) != 0) {   //是奇数
+            return true;
+        }
+        return false;
+    }
+
+    //偶数判断
+    public boolean isEven(int a) {
+        return !isOdd(a);
+    }
+
+    //该组结果
+    private int getResult(int count1, int count2) {
+        if (isEven(count1) && isEven(count2)) {
+            return 1;
+        }
+        return 0;
+    }
+
+    private int resetZero(int count) {
+        if (count < 2) {
+            return 0;
+        }
+        return count;
+    }
 }
