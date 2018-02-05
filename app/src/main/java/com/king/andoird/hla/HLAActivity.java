@@ -7,6 +7,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -119,7 +120,7 @@ public class HLAActivity extends AppCompatActivity {
                 String dr22 = mDR22EditText.getText().toString();
                 Integer resultDR = matching("DR", dr1, dr2, dr11, dr22);
 
-                mResultText.setText(checkAll(resultA, resultB, resultDQ, resultDR));
+                mResultText.setText(Html.fromHtml(checkAll(resultA, resultB, resultDQ, resultDR)));
             }
         });
         mClearButton = findViewById(R.id.clear_button);
@@ -192,43 +193,43 @@ public class HLAActivity extends AppCompatActivity {
         int i = 0;
         if (aCnt != null) {
             if (aCnt > 0) {
-                sb.append("A点匹配;");
+                sb.append("<font color='#008000'>A点匹配;</font>");
             } else {
-                sb.append("A点不匹配;");
+                sb.append("<font color='#FF0000'>A点不匹配;</font>");
             }
             i++;
         }
         if (bCnt != null) {
             if (bCnt > 0) {
-                sb.append("B点匹配;");
+                sb.append("<font color='#008000'>B点匹配;</font>");
             } else {
-                sb.append("B点不匹配;");
+                sb.append("<font color='#FF0000'>B点不匹配;</font>");
             }
             i++;
             if (i == 2) {
-                sb.append("\n");
+                sb.append("<br>");
             }
         }
         if (drCnt != null) {
             if (drCnt > 0) {
-                sb.append("DR点匹配;");
+                sb.append("<font color='#008000'>DR点匹配;</font>");
             } else {
-                sb.append("DR点不匹配;");
+                sb.append("<font color='#FF0000'>DR点不匹配;</font>");
             }
             i++;
             if (i == 2) {
-                sb.append("\n");
+                sb.append("<br>");
             }
         }
         if (dqCnt != null) {
             if (dqCnt > 0) {
-                sb.append("DQ点匹配;");
+                sb.append("<font color='#008000'>DQ点匹配;</font>");
             } else {
-                sb.append("DQ点不匹配;");
+                sb.append("<font color='#FF0000'>DQ点不匹配;</font>");
             }
         }
         String result = sb.toString();
-        if (result.endsWith("\n")) {
+        if (result.endsWith("<br>")) {
             result = result.substring(0, result.length() - 2);
         }
         return result;
