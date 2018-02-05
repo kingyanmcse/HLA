@@ -99,25 +99,25 @@ public class HLAActivity extends AppCompatActivity {
                 String a2 = mA2EditText.getText().toString();
                 String a11 = mA11EditText.getText().toString();
                 String a22 = mA22EditText.getText().toString();
-                int resultA = matching("A", a1, a2, a11, a22);
+                Integer resultA = matching("A", a1, a2, a11, a22);
 
                 String b1 = mB1EditText.getText().toString();
                 String b2 = mB2EditText.getText().toString();
                 String b11 = mB11EditText.getText().toString();
                 String b22 = mB22EditText.getText().toString();
-                int resultB = matching("B", b1, b2, b11, b22);
+                Integer resultB = matching("B", b1, b2, b11, b22);
 
                 String dq1 = mDQ1EditText.getText().toString();
                 String dq2 = mDQ2EditText.getText().toString();
                 String dq11 = mDQ11EditText.getText().toString();
                 String dq22 = mDQ22EditText.getText().toString();
-                int resultDQ = matching("DQ", dq1, dq2, dq11, dq22);
+                Integer resultDQ = matching("DQ", dq1, dq2, dq11, dq22);
 
                 String dr1 = mDR1EditText.getText().toString();
                 String dr2 = mDR2EditText.getText().toString();
                 String dr11 = mDR11EditText.getText().toString();
                 String dr22 = mDR22EditText.getText().toString();
-                int resultDR = matching("DR", dr1, dr2, dr11, dr22);
+                Integer resultDR = matching("DR", dr1, dr2, dr11, dr22);
 
                 mResultText.setText(checkAll(resultA, resultB, resultDQ, resultDR));
             }
@@ -185,31 +185,51 @@ public class HLAActivity extends AppCompatActivity {
     }
 
     /**
-     * EditText获取焦点并显示软键盘
+     * 获得结果
      */
-    public String checkAll(int aCnt, int bCnt, int dqCnt, int drCnt) {
-        String result = "不匹配";
-        int allCount = 0;
-        if (aCnt > 0) {
-            allCount++;
+    public String checkAll(Integer aCnt, Integer bCnt, Integer dqCnt, Integer drCnt) {
+        StringBuffer sb = new StringBuffer();
+        int i = 0;
+        if (aCnt != null) {
+            if (aCnt > 0) {
+                sb.append("A点匹配;");
+            } else {
+                sb.append("A点不匹配;");
+            }
+            i++;
         }
-        if (bCnt > 0) {
-            allCount++;
+        if (bCnt != null) {
+            if (bCnt > 0) {
+                sb.append("B点匹配;");
+            } else {
+                sb.append("B点不匹配;");
+            }
+            i++;
+            if (i == 2) {
+                sb.append("\n");
+            }
         }
-        if (drCnt > 0) {
-            allCount++;
+        if (drCnt != null) {
+            if (drCnt > 0) {
+                sb.append("DR点匹配;");
+            } else {
+                sb.append("DR点不匹配;");
+            }
+            i++;
+            if (i == 2) {
+                sb.append("\n");
+            }
         }
-        if (dqCnt > 0) {
-            allCount++;
+        if (dqCnt != null) {
+            if (dqCnt > 0) {
+                sb.append("DQ点匹配;");
+            } else {
+                sb.append("DQ点不匹配;");
+            }
         }
-        if (allCount == 1) {
-            result = "1点匹配";
-        } else if (allCount == 2) {
-            result = "2点匹配";
-        } else if (allCount == 3) {
-            result = "3点匹配";
-        } else if (allCount == 4) {
-            result = "完全匹配";
+        String result = sb.toString();
+        if (result.endsWith("\n")) {
+            result = result.substring(0, result.length() - 2);
         }
         return result;
     }
@@ -217,8 +237,8 @@ public class HLAActivity extends AppCompatActivity {
     /**
      * 匹配A点数据,若供体抗源特异性为0,则可以匹配任意值,若受体抗源特异性维0,则只能匹配为0的供体。
      */
-    public int matching(String type, String a1, String a2, String a11, String a22) {
-        int result = 0;
+    public Integer matching(String type, String a1, String a2, String a11, String a22) {
+        Integer result = 0;
         if ("A".equals(type)) {
             if (isNotEmpty(a1) && isNotEmpty(a11)) {
                 int count1 = 0;
@@ -244,6 +264,8 @@ public class HLAActivity extends AppCompatActivity {
                 if (count1 != 0 && count2 != 0) {
                     result = getResult(count1, count2);
                 }
+            } else {
+                result = null;
             }
         } else if ("B".equals(type)) {
             if (isNotEmpty(a1) && isNotEmpty(a11)) {
@@ -295,6 +317,8 @@ public class HLAActivity extends AppCompatActivity {
                 if (count1 != 0 && count2 != 0) {
                     result = getResult(count1, count2);
                 }
+            } else {
+                result = null;
             }
         } else if ("DQ".equals(type)) {
             if (isNotEmpty(a1) && isNotEmpty(a11)) {
@@ -325,6 +349,8 @@ public class HLAActivity extends AppCompatActivity {
                 if (count1 != 0 && count2 != 0) {
                     result = getResult(count1, count2);
                 }
+            } else {
+                result = null;
             }
         } else if ("DR".equals(type)) {
             if (isNotEmpty(a1) && isNotEmpty(a11)) {
@@ -351,6 +377,8 @@ public class HLAActivity extends AppCompatActivity {
                 if (count1 != 0 && count2 != 0) {
                     result = getResult(count1, count2);
                 }
+            } else {
+                result = null;
             }
         }
         return result;
