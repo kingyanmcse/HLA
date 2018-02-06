@@ -248,11 +248,17 @@ public class HLAActivity extends AppCompatActivity {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
                 }
+                if (isRight(count1, count2)) {
+                    return 1;
+                }
                 count1 = resetZero(count1);
                 count2 = resetZero(count2);
                 for (String str : A2) {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
+                }
+                if (isRight(count1, count2)) {
+                    return 1;
                 }
                 count1 = resetZero(count1);
                 count2 = resetZero(count2);
@@ -260,10 +266,8 @@ public class HLAActivity extends AppCompatActivity {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
                 }
-                count1 = resetZero(count1);
-                count2 = resetZero(count2);
-                if (count1 != 0 && count2 != 0) {
-                    result = getResult(count1, count2);
+                if (isRight(count1, count2)) {
+                    return 1;
                 }
             } else {
                 result = null;
@@ -276,11 +280,17 @@ public class HLAActivity extends AppCompatActivity {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
                 }
+                if (isRight(count1, count2)) {
+                    return 1;
+                }
                 count1 = resetZero(count1);
                 count2 = resetZero(count2);
                 for (String str : B7) {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
+                }
+                if (isRight(count1, count2)) {
+                    return 1;
                 }
                 count1 = resetZero(count1);
                 count2 = resetZero(count2);
@@ -288,11 +298,17 @@ public class HLAActivity extends AppCompatActivity {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
                 }
+                if (isRight(count1, count2)) {
+                    return 1;
+                }
                 count1 = resetZero(count1);
                 count2 = resetZero(count2);
                 for (String str : B12) {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
+                }
+                if (isRight(count1, count2)) {
+                    return 1;
                 }
                 count1 = resetZero(count1);
                 count2 = resetZero(count2);
@@ -300,11 +316,17 @@ public class HLAActivity extends AppCompatActivity {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
                 }
+                if (isRight(count1, count2)) {
+                    return 1;
+                }
                 count1 = resetZero(count1);
                 count2 = resetZero(count2);
                 for (String str : BW4) {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
+                }
+                if (isRight(count1, count2)) {
+                    return 1;
                 }
                 count1 = resetZero(count1);
                 count2 = resetZero(count2);
@@ -312,11 +334,8 @@ public class HLAActivity extends AppCompatActivity {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
                 }
-                count1 = resetZero(count1);
-                count2 = resetZero(count2);
-
-                if (count1 != 0 && count2 != 0) {
-                    result = getResult(count1, count2);
+                if (isRight(count1, count2)) {
+                    return 1;
                 }
             } else {
                 result = null;
@@ -329,11 +348,17 @@ public class HLAActivity extends AppCompatActivity {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
                 }
+                if (isRight(count1, count2)) {
+                    return 1;
+                }
                 count1 = resetZero(count1);
                 count2 = resetZero(count2);
                 for (String str : DQ2) {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
+                }
+                if (isRight(count1, count2)) {
+                    return 1;
                 }
                 count1 = resetZero(count1);
                 count2 = resetZero(count2);
@@ -341,14 +366,17 @@ public class HLAActivity extends AppCompatActivity {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
                 }
+                if (isRight(count1, count2)) {
+                    return 1;
+                }
                 count1 = resetZero(count1);
                 count2 = resetZero(count2);
                 for (String str : DQ4) {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
                 }
-                if (count1 != 0 && count2 != 0) {
-                    result = getResult(count1, count2);
+                if (isRight(count1, count2)) {
+                    return 1;
                 }
             } else {
                 result = null;
@@ -361,11 +389,17 @@ public class HLAActivity extends AppCompatActivity {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
                 }
+                if (isRight(count1, count2)) {
+                    return 1;
+                }
                 count1 = resetZero(count1);
                 count2 = resetZero(count2);
                 for (String str : DRB4) {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
+                }
+                if (isRight(count1, count2)) {
+                    return 1;
                 }
                 count1 = resetZero(count1);
                 count2 = resetZero(count2);
@@ -373,10 +407,8 @@ public class HLAActivity extends AppCompatActivity {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
                 }
-                count1 = resetZero(count1);
-                count2 = resetZero(count2);
-                if (count1 != 0 && count2 != 0) {
-                    result = getResult(count1, count2);
+                if (isRight(count1, count2)) {
+                    return 1;
                 }
             } else {
                 result = null;
@@ -423,13 +455,6 @@ public class HLAActivity extends AppCompatActivity {
         return !isEmpty(str);
     }
 
-    private int count(String str, String a1, String a11, int count) {
-        if (str.equals(a1) || str.equals(a11)) {
-            return count++;
-        }
-        return count;
-    }
-
     //奇数判断
     public boolean isOdd(int a) {
         if ((a & 1) != 0) {   //是奇数
@@ -454,6 +479,23 @@ public class HLAActivity extends AppCompatActivity {
     private int resetZero(int count) {
         if (count < 2) {
             return 0;
+        }
+        return count;
+    }
+
+    private boolean isRight(int count1, int count2) {
+        if (count1 == 2 && count2 == 2) {
+            return true;
+        }
+        return false;
+    }
+
+    private int count(String str, String a1, String a11, int count) {
+        if (str.equals(a1) || str.equals(a11)) {
+            if (a1.equals(a11)) {
+                return count + 2;
+            }
+            return count + 1;
         }
         return count;
     }
