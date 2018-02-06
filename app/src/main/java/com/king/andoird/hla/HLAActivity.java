@@ -63,7 +63,6 @@ public class HLAActivity extends AppCompatActivity {
     private EditText mDQ11EditText;
     private EditText mDQ22EditText;
     private TextView mResultText;
-//    private TextView mAboutText;
 
 
     @Override
@@ -91,8 +90,6 @@ public class HLAActivity extends AppCompatActivity {
         mDQ22EditText = findViewById(R.id.dq22_edittext);
 
         mResultText = findViewById(R.id.result_text);
-//        mAboutText = findViewById(R.id.about);
-//        mAboutText.setTextColor(Color.WHITE);
 
         mConfirmButton = findViewById(R.id.cofirm_button);
         mConfirmButton.setOnClickListener(new View.OnClickListener() {
