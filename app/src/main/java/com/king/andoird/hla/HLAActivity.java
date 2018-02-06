@@ -17,9 +17,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class HLAActivity extends AppCompatActivity {
-
+    long beginTime = 0;
     private static String[] A1 = {"1", "3", "11", "29", "36"};
     private static String[] A2 = {"2", "23", "24", "68", "69"};
     private static String[] A10 = {"25", "26", "34", "66", "19", "31", "32", "33", "74", "43"};
@@ -151,6 +152,29 @@ public class HLAActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.hla, menu);
         return true;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // TODO Auto-generated method stub
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            exit();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    public void exit() {
+        //实现两次点击退出系统；
+        if (System.currentTimeMillis() - beginTime > 2000) {
+            Toast.makeText(this, "再点击一次退出系统", Toast.LENGTH_SHORT).show();
+            beginTime = System.currentTimeMillis();
+        } else {
+            finish();
+            System.exit(0);
+        }
+
+
     }
 
     @Override
