@@ -194,18 +194,22 @@ public class HLAActivity extends AppCompatActivity {
         StringBuffer sb = new StringBuffer();
         int i = 0;
         if (aCnt != null) {
-            if (aCnt > 0) {
-                sb.append("<font color='#008000'>A点匹配;</font>");
+            if (aCnt == 2) {
+                sb.append("<font color='#008000'>A组两点匹配;</font>");
+            } else if (aCnt == 1) {
+                sb.append("<font color='#FF0000'>A组一点匹配;</font>");
             } else {
-                sb.append("<font color='#FF0000'>A点不匹配;</font>");
+                sb.append("<font color='#FF0000'>A组不匹配;</font>");
             }
             i++;
         }
         if (bCnt != null) {
-            if (bCnt > 0) {
-                sb.append("<font color='#008000'>B点匹配;</font>");
+            if (bCnt == 2) {
+                sb.append("<font color='#008000'>B组两点匹配;</font>");
+            } else if (bCnt == 1) {
+                sb.append("<font color='#FF0000'>B组一点匹配;</font>");
             } else {
-                sb.append("<font color='#FF0000'>B点不匹配;</font>");
+                sb.append("<font color='#FF0000'>B组不匹配;</font>");
             }
             i++;
             if (i == 2) {
@@ -213,10 +217,12 @@ public class HLAActivity extends AppCompatActivity {
             }
         }
         if (drCnt != null) {
-            if (drCnt > 0) {
-                sb.append("<font color='#008000'>DR点匹配;</font>");
+            if (drCnt == 2) {
+                sb.append("<font color='#008000'>DR组两点匹配;</font>");
+            } else if (drCnt == 1) {
+                sb.append("<font color='#FF0000'>DR组一点匹配;</font>");
             } else {
-                sb.append("<font color='#FF0000'>DR点不匹配;</font>");
+                sb.append("<font color='#FF0000'>DR组不匹配;</font>");
             }
             i++;
             if (i == 2) {
@@ -224,10 +230,12 @@ public class HLAActivity extends AppCompatActivity {
             }
         }
         if (dqCnt != null) {
-            if (dqCnt > 0) {
-                sb.append("<font color='#008000'>DQ点匹配;</font>");
+            if (dqCnt == 2) {
+                sb.append("<font color='#008000'>DQ组两点匹配;</font>");
+            } else if (dqCnt == 1) {
+                sb.append("<font color='#FF0000'>DQ组一点匹配;</font>");
             } else {
-                sb.append("<font color='#FF0000'>DQ点不匹配;</font>");
+                sb.append("<font color='#FF0000'>DQ组不匹配;</font>");
             }
         }
         String result = sb.toString();
@@ -238,7 +246,7 @@ public class HLAActivity extends AppCompatActivity {
     }
 
     /**
-     * 匹配A点数据,若供体抗源特异性为0,则可以匹配任意值,若受体抗源特异性维0,则只能匹配为0的供体。
+     * 匹配数据并返回结果
      */
     public Integer matching(String type, String a1, String a2, String a11, String a22) {
         Integer result = 0;
@@ -250,8 +258,9 @@ public class HLAActivity extends AppCompatActivity {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
                 }
-                if (isRight(count1, count2)) {
-                    return 1;
+                //如果4点在同一组直接返回结果
+                if (inSameGroup(count1, count2)) {
+                    return 2;
                 }
                 count1 = resetZero(count1);
                 count2 = resetZero(count2);
@@ -259,8 +268,8 @@ public class HLAActivity extends AppCompatActivity {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
                 }
-                if (isRight(count1, count2)) {
-                    return 1;
+                if (inSameGroup(count1, count2)) {
+                    return 2;
                 }
                 count1 = resetZero(count1);
                 count2 = resetZero(count2);
@@ -268,9 +277,7 @@ public class HLAActivity extends AppCompatActivity {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
                 }
-                if (isRight(count1, count2)) {
-                    return 1;
-                }
+                return getResult(count1, count2);
             } else {
                 result = null;
             }
@@ -282,8 +289,8 @@ public class HLAActivity extends AppCompatActivity {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
                 }
-                if (isRight(count1, count2)) {
-                    return 1;
+                if (inSameGroup(count1, count2)) {
+                    return 2;
                 }
                 count1 = resetZero(count1);
                 count2 = resetZero(count2);
@@ -291,8 +298,8 @@ public class HLAActivity extends AppCompatActivity {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
                 }
-                if (isRight(count1, count2)) {
-                    return 1;
+                if (inSameGroup(count1, count2)) {
+                    return 2;
                 }
                 count1 = resetZero(count1);
                 count2 = resetZero(count2);
@@ -300,8 +307,8 @@ public class HLAActivity extends AppCompatActivity {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
                 }
-                if (isRight(count1, count2)) {
-                    return 1;
+                if (inSameGroup(count1, count2)) {
+                    return 2;
                 }
                 count1 = resetZero(count1);
                 count2 = resetZero(count2);
@@ -309,8 +316,8 @@ public class HLAActivity extends AppCompatActivity {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
                 }
-                if (isRight(count1, count2)) {
-                    return 1;
+                if (inSameGroup(count1, count2)) {
+                    return 2;
                 }
                 count1 = resetZero(count1);
                 count2 = resetZero(count2);
@@ -318,8 +325,8 @@ public class HLAActivity extends AppCompatActivity {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
                 }
-                if (isRight(count1, count2)) {
-                    return 1;
+                if (inSameGroup(count1, count2)) {
+                    return 2;
                 }
                 count1 = resetZero(count1);
                 count2 = resetZero(count2);
@@ -327,8 +334,8 @@ public class HLAActivity extends AppCompatActivity {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
                 }
-                if (isRight(count1, count2)) {
-                    return 1;
+                if (inSameGroup(count1, count2)) {
+                    return 2;
                 }
                 count1 = resetZero(count1);
                 count2 = resetZero(count2);
@@ -336,9 +343,7 @@ public class HLAActivity extends AppCompatActivity {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
                 }
-                if (isRight(count1, count2)) {
-                    return 1;
-                }
+                return getResult(count1, count2);
             } else {
                 result = null;
             }
@@ -350,8 +355,8 @@ public class HLAActivity extends AppCompatActivity {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
                 }
-                if (isRight(count1, count2)) {
-                    return 1;
+                if (inSameGroup(count1, count2)) {
+                    return 2;
                 }
                 count1 = resetZero(count1);
                 count2 = resetZero(count2);
@@ -359,8 +364,8 @@ public class HLAActivity extends AppCompatActivity {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
                 }
-                if (isRight(count1, count2)) {
-                    return 1;
+                if (inSameGroup(count1, count2)) {
+                    return 2;
                 }
                 count1 = resetZero(count1);
                 count2 = resetZero(count2);
@@ -368,8 +373,8 @@ public class HLAActivity extends AppCompatActivity {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
                 }
-                if (isRight(count1, count2)) {
-                    return 1;
+                if (inSameGroup(count1, count2)) {
+                    return 2;
                 }
                 count1 = resetZero(count1);
                 count2 = resetZero(count2);
@@ -377,9 +382,7 @@ public class HLAActivity extends AppCompatActivity {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
                 }
-                if (isRight(count1, count2)) {
-                    return 1;
-                }
+                return getResult(count1, count2);
             } else {
                 result = null;
             }
@@ -391,8 +394,8 @@ public class HLAActivity extends AppCompatActivity {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
                 }
-                if (isRight(count1, count2)) {
-                    return 1;
+                if (inSameGroup(count1, count2)) {
+                    return 2;
                 }
                 count1 = resetZero(count1);
                 count2 = resetZero(count2);
@@ -400,8 +403,8 @@ public class HLAActivity extends AppCompatActivity {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
                 }
-                if (isRight(count1, count2)) {
-                    return 1;
+                if (inSameGroup(count1, count2)) {
+                    return 2;
                 }
                 count1 = resetZero(count1);
                 count2 = resetZero(count2);
@@ -409,9 +412,7 @@ public class HLAActivity extends AppCompatActivity {
                     count1 = count(str, a1, a11, count1);
                     count2 = count(str, a2, a22, count2);
                 }
-                if (isRight(count1, count2)) {
-                    return 1;
-                }
+                return getResult(count1, count2);
             } else {
                 result = null;
             }
@@ -457,35 +458,27 @@ public class HLAActivity extends AppCompatActivity {
         return !isEmpty(str);
     }
 
-    //奇数判断
-    public boolean isOdd(int a) {
-        if ((a & 1) != 0) {   //是奇数
-            return true;
-        }
-        return false;
-    }
-
-    //偶数判断
-    public boolean isEven(int a) {
-        return !isOdd(a);
-    }
-
     //该组结果
     private int getResult(int count1, int count2) {
-        if (isEven(count1) && isEven(count2)) {
-            return 1;
+        if (count1 == 2 && count2 == 2) {
+            return 2;
+        } else {
+            if (count1 > 1 || count2 > 1) {
+                return 1;
+            } else {
+                return 0;
+            }
         }
-        return 0;
     }
 
     private int resetZero(int count) {
-        if (count < 2) {
+        if (count != 2) {
             return 0;
         }
         return count;
     }
 
-    private boolean isRight(int count1, int count2) {
+    private boolean inSameGroup(int count1, int count2) {
         if (count1 == 2 && count2 == 2) {
             return true;
         }
