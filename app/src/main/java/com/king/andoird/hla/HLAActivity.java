@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -60,6 +62,7 @@ public class HLAActivity extends AppCompatActivity {
     private EditText mDQ11EditText;
     private EditText mDQ22EditText;
     private TextView mResultText;
+//    private TextView mAboutText;
 
 
     @Override
@@ -87,7 +90,8 @@ public class HLAActivity extends AppCompatActivity {
         mDQ22EditText = findViewById(R.id.dq22_edittext);
 
         mResultText = findViewById(R.id.result_text);
-
+//        mAboutText = findViewById(R.id.about);
+//        mAboutText.setTextColor(Color.WHITE);
 
         mConfirmButton = findViewById(R.id.cofirm_button);
         mConfirmButton.setOnClickListener(new View.OnClickListener() {
@@ -155,7 +159,7 @@ public class HLAActivity extends AppCompatActivity {
             case R.id.about:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setView(R.layout.dialog_hla)
-                        .setCancelable(false)
+                        .setCancelable(true)
                         .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 //do things

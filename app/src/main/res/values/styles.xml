@@ -12,6 +12,8 @@
 
     <style name="optionMenu" parent="Widget.AppCompat.ActionBar">
         <item name="android:popupBackground">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorBlack</item>
     </style>
+
 
 </resources>
