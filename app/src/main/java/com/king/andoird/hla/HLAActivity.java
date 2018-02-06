@@ -241,7 +241,7 @@ public class HLAActivity extends AppCompatActivity {
     public Integer matching(String type, String a1, String a2, String a11, String a22) {
         Integer result = 0;
         if ("A".equals(type)) {
-            if (isNotEmpty(a1) && isNotEmpty(a11)) {
+            if (isNotEmpty(a1) && isNotEmpty(a11) && isNotEmpty(a2) && isNotEmpty(a22)) {
                 int count1 = 0;
                 int count2 = 0;
                 for (String str : A1) {
@@ -269,7 +269,7 @@ public class HLAActivity extends AppCompatActivity {
                 result = null;
             }
         } else if ("B".equals(type)) {
-            if (isNotEmpty(a1) && isNotEmpty(a11)) {
+            if (isNotEmpty(a1) && isNotEmpty(a11) && isNotEmpty(a2) && isNotEmpty(a22)) {
                 int count1 = 0;
                 int count2 = 0;
                 for (String str : B5) {
@@ -322,7 +322,7 @@ public class HLAActivity extends AppCompatActivity {
                 result = null;
             }
         } else if ("DQ".equals(type)) {
-            if (isNotEmpty(a1) && isNotEmpty(a11)) {
+            if (isNotEmpty(a1) && isNotEmpty(a11) && isNotEmpty(a2) && isNotEmpty(a22)) {
                 int count1 = 0;
                 int count2 = 0;
                 for (String str : DQ1) {
@@ -354,7 +354,7 @@ public class HLAActivity extends AppCompatActivity {
                 result = null;
             }
         } else if ("DR".equals(type)) {
-            if (isNotEmpty(a1) && isNotEmpty(a11)) {
+            if (isNotEmpty(a1) && isNotEmpty(a11) && isNotEmpty(a2) && isNotEmpty(a22)) {
                 int count1 = 0;
                 int count2 = 0;
                 for (String str : DRB3) {
@@ -425,7 +425,7 @@ public class HLAActivity extends AppCompatActivity {
 
     private int count(String str, String a1, String a11, int count) {
         if (str.equals(a1) || str.equals(a11)) {
-            return count + 1;
+            return count++;
         }
         return count;
     }
