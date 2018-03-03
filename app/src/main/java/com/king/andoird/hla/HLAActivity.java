@@ -222,7 +222,7 @@ public class HLAActivity extends AppCompatActivity {
             if (aCnt == 2) {
                 sb.append("<font color='#008000'>A组两点匹配;</font>");
             } else if (aCnt == 1) {
-                sb.append("<font color='#FF0000'>A组一点匹配;</font>");
+                sb.append("<font color='#FFFF00'>A组一点匹配;</font>");
             } else {
                 sb.append("<font color='#FF0000'>A组不匹配;</font>");
             }
@@ -232,7 +232,7 @@ public class HLAActivity extends AppCompatActivity {
             if (bCnt == 2) {
                 sb.append("<font color='#008000'>B组两点匹配;</font>");
             } else if (bCnt == 1) {
-                sb.append("<font color='#FF0000'>B组一点匹配;</font>");
+                sb.append("<font color='#FFFF00'>B组一点匹配;</font>");
             } else {
                 sb.append("<font color='#FF0000'>B组不匹配;</font>");
             }
@@ -245,7 +245,7 @@ public class HLAActivity extends AppCompatActivity {
             if (drCnt == 2) {
                 sb.append("<font color='#008000'>DR组两点匹配;</font>");
             } else if (drCnt == 1) {
-                sb.append("<font color='#FF0000'>DR组一点匹配;</font>");
+                sb.append("<font color='#FFFF00'>DR组一点匹配;</font>");
             } else {
                 sb.append("<font color='#FF0000'>DR组不匹配;</font>");
             }
@@ -258,7 +258,7 @@ public class HLAActivity extends AppCompatActivity {
             if (dqCnt == 2) {
                 sb.append("<font color='#008000'>DQ组两点匹配;</font>");
             } else if (dqCnt == 1) {
-                sb.append("<font color='#FF0000'>DQ组一点匹配;</font>");
+                sb.append("<font color='#FFFF00'>DQ组一点匹配;</font>");
             } else {
                 sb.append("<font color='#FF0000'>DQ组不匹配;</font>");
             }
