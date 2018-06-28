@@ -226,28 +226,39 @@ public class HLAActivity extends AppCompatActivity {
         StringBuffer sb = new StringBuffer();
         int i = 0;
         if (isNotEmpty(a)) {
+            sb.append("A");
             sb.append(a);
+            sb.append(", ");
             i++;
         }
         if (isNotEmpty(b)) {
+            sb.append("B");
             sb.append(b);
+            sb.append(", ");
             i++;
             if (i == 2) {
                 sb.append("<br>");
             }
         }
         if (isNotEmpty(dr)) {
+            sb.append("DR");
             sb.append(dr);
+            sb.append(", ");
             i++;
             if (i == 2) {
                 sb.append("<br>");
             }
         }
         if (isNotEmpty(dq)) {
+            sb.append("DQ");
             sb.append(dq);
+            sb.append(", ");
         }
         String result = sb.toString();
         if (result.endsWith("<br>")) {
+            result = result.substring(0, result.length() - 4);
+        }
+        if (result.endsWith(", ")) {
             result = result.substring(0, result.length() - 2);
         }
         return result;
@@ -264,6 +275,7 @@ public class HLAActivity extends AppCompatActivity {
                 list1.add(getResult(isSameNumber(a1, a11, a22), isSameGroup(A1, a1, a11, a22)));
                 list1.add(getResult(isSameNumber(a1, a11, a22), isSameGroup(A2, a1, a11, a22)));
                 list1.add(getResult(isSameNumber(a1, a11, a22), isSameGroup(A10, a1, a11, a22)));
+                
                 list2.add(getResult(isSameNumber(a2, a11, a22), isSameGroup(A1, a2, a11, a22)));
                 list2.add(getResult(isSameNumber(a2, a11, a22), isSameGroup(A2, a2, a11, a22)));
                 list2.add(getResult(isSameNumber(a2, a11, a22), isSameGroup(A10, a2, a11, a22)));
