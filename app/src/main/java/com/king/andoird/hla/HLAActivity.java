@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +17,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HLAActivity extends AppCompatActivity {
     long beginTime = 0;
@@ -104,26 +106,31 @@ public class HLAActivity extends AppCompatActivity {
                 String a2 = mA2EditText.getText().toString();
                 String a11 = mA11EditText.getText().toString();
                 String a22 = mA22EditText.getText().toString();
-                Integer resultA = matching("A", a1, a2, a11, a22);
+                String resultA = matching("A", a1, a2, a11, a22);
+//                Integer resultA = matching("A", a1, a2, a11, a22);
 
                 String b1 = mB1EditText.getText().toString();
                 String b2 = mB2EditText.getText().toString();
                 String b11 = mB11EditText.getText().toString();
                 String b22 = mB22EditText.getText().toString();
-                Integer resultB = matching("B", b1, b2, b11, b22);
+                String resultB = matching("B", b1, b2, b11, b22);
+//                Integer resultB = matching("B", b1, b2, b11, b22);
 
                 String dq1 = mDQ1EditText.getText().toString();
                 String dq2 = mDQ2EditText.getText().toString();
                 String dq11 = mDQ11EditText.getText().toString();
                 String dq22 = mDQ22EditText.getText().toString();
-                Integer resultDQ = matching("DQ", dq1, dq2, dq11, dq22);
+                String resultDQ = matching("DQ", dq1, dq2, dq11, dq22);
+//                Integer resultDQ = matching("DQ", dq1, dq2, dq11, dq22);
 
                 String dr1 = mDR1EditText.getText().toString();
                 String dr2 = mDR2EditText.getText().toString();
                 String dr11 = mDR11EditText.getText().toString();
                 String dr22 = mDR22EditText.getText().toString();
-                Integer resultDR = matching("DR", dr1, dr2, dr11, dr22);
+                String resultDR = matching("DR", dr1, dr2, dr11, dr22);
+//                Integer resultDR = matching("DR", dr1, dr2, dr11, dr22);
 
+//                mResultText.setText(Html.fromHtml(checkAll(resultA, resultB, resultDQ, resultDR))); 1.04
                 mResultText.setText(Html.fromHtml(checkAll(resultA, resultB, resultDQ, resultDR)));
             }
         });
@@ -215,53 +222,29 @@ public class HLAActivity extends AppCompatActivity {
     /**
      * 获得结果
      */
-    public String checkAll(Integer aCnt, Integer bCnt, Integer dqCnt, Integer drCnt) {
+    public String checkAll(String a, String b, String dq, String dr) {
         StringBuffer sb = new StringBuffer();
         int i = 0;
-        if (aCnt != null) {
-            if (aCnt == 2) {
-                sb.append("<font color='#008000'>A组两点匹配;</font>");
-            } else if (aCnt == 1) {
-                sb.append("<font color='#FFFF00'>A组一点匹配;</font>");
-            } else {
-                sb.append("<font color='#FF0000'>A组不匹配;</font>");
-            }
+        if (isNotEmpty(a)) {
+            sb.append(a);
             i++;
         }
-        if (bCnt != null) {
-            if (bCnt == 2) {
-                sb.append("<font color='#008000'>B组两点匹配;</font>");
-            } else if (bCnt == 1) {
-                sb.append("<font color='#FFFF00'>B组一点匹配;</font>");
-            } else {
-                sb.append("<font color='#FF0000'>B组不匹配;</font>");
-            }
+        if (isNotEmpty(b)) {
+            sb.append(b);
             i++;
             if (i == 2) {
                 sb.append("<br>");
             }
         }
-        if (drCnt != null) {
-            if (drCnt == 2) {
-                sb.append("<font color='#008000'>DR组两点匹配;</font>");
-            } else if (drCnt == 1) {
-                sb.append("<font color='#FFFF00'>DR组一点匹配;</font>");
-            } else {
-                sb.append("<font color='#FF0000'>DR组不匹配;</font>");
-            }
+        if (isNotEmpty(dr)) {
+            sb.append(dr);
             i++;
             if (i == 2) {
                 sb.append("<br>");
             }
         }
-        if (dqCnt != null) {
-            if (dqCnt == 2) {
-                sb.append("<font color='#008000'>DQ组两点匹配;</font>");
-            } else if (dqCnt == 1) {
-                sb.append("<font color='#FFFF00'>DQ组一点匹配;</font>");
-            } else {
-                sb.append("<font color='#FF0000'>DQ组不匹配;</font>");
-            }
+        if (isNotEmpty(dq)) {
+            sb.append(dq);
         }
         String result = sb.toString();
         if (result.endsWith("<br>")) {
@@ -273,182 +256,85 @@ public class HLAActivity extends AppCompatActivity {
     /**
      * 匹配数据并返回结果
      */
-    public Integer matching(String type, String a1, String a2, String a11, String a22) {
-        Integer result = 0;
+    public String matching(String type, String a1, String a2, String a11, String a22) {
         if ("A".equals(type)) {
             if (isNotEmpty(a1) && isNotEmpty(a11) && isNotEmpty(a2) && isNotEmpty(a22)) {
-                int count1 = 0;
-                int count2 = 0;
-                for (String str : A1) {
-                    count1 = count(str, a1, a11, count1);
-                    count2 = count(str, a2, a22, count2);
-                }
-                //如果4点在同一组直接返回结果
-                if (inSameGroup(count1, count2)) {
-                    return 2;
-                }
-                count1 = resetZero(count1);
-                count2 = resetZero(count2);
-                for (String str : A2) {
-                    count1 = count(str, a1, a11, count1);
-                    count2 = count(str, a2, a22, count2);
-                }
-                if (inSameGroup(count1, count2)) {
-                    return 2;
-                }
-                count1 = resetZero(count1);
-                count2 = resetZero(count2);
-                for (String str : A10) {
-                    count1 = count(str, a1, a11, count1);
-                    count2 = count(str, a2, a22, count2);
-                }
-                return getResult(count1, count2);
+                List list1 = new ArrayList();
+                List list2 = new ArrayList();
+                list1.add(getResult(isSameNumber(a1, a11, a22), isSameGroup(A1, a1, a11, a22)));
+                list1.add(getResult(isSameNumber(a1, a11, a22), isSameGroup(A2, a1, a11, a22)));
+                list1.add(getResult(isSameNumber(a1, a11, a22), isSameGroup(A10, a1, a11, a22)));
+                list2.add(getResult(isSameNumber(a2, a11, a22), isSameGroup(A1, a2, a11, a22)));
+                list2.add(getResult(isSameNumber(a2, a11, a22), isSameGroup(A2, a2, a11, a22)));
+                list2.add(getResult(isSameNumber(a2, a11, a22), isSameGroup(A10, a2, a11, a22)));
+                return getFormatResult(list1, list2);
             } else {
-                result = null;
+                return null;
             }
         } else if ("B".equals(type)) {
             if (isNotEmpty(a1) && isNotEmpty(a11) && isNotEmpty(a2) && isNotEmpty(a22)) {
-                int count1 = 0;
-                int count2 = 0;
-                for (String str : B5) {
-                    count1 = count(str, a1, a11, count1);
-                    count2 = count(str, a2, a22, count2);
-                }
-                if (inSameGroup(count1, count2)) {
-                    return 2;
-                }
-                count1 = resetZero(count1);
-                count2 = resetZero(count2);
-                for (String str : B7) {
-                    count1 = count(str, a1, a11, count1);
-                    count2 = count(str, a2, a22, count2);
-                }
-                if (inSameGroup(count1, count2)) {
-                    return 2;
-                }
-                count1 = resetZero(count1);
-                count2 = resetZero(count2);
-                for (String str : B8) {
-                    count1 = count(str, a1, a11, count1);
-                    count2 = count(str, a2, a22, count2);
-                }
-                if (inSameGroup(count1, count2)) {
-                    return 2;
-                }
-                count1 = resetZero(count1);
-                count2 = resetZero(count2);
-                for (String str : B12) {
-                    count1 = count(str, a1, a11, count1);
-                    count2 = count(str, a2, a22, count2);
-                }
-                if (inSameGroup(count1, count2)) {
-                    return 2;
-                }
-                count1 = resetZero(count1);
-                count2 = resetZero(count2);
-                for (String str : B17) {
-                    count1 = count(str, a1, a11, count1);
-                    count2 = count(str, a2, a22, count2);
-                }
-                if (inSameGroup(count1, count2)) {
-                    return 2;
-                }
-                count1 = resetZero(count1);
-                count2 = resetZero(count2);
-                for (String str : BW4) {
-                    count1 = count(str, a1, a11, count1);
-                    count2 = count(str, a2, a22, count2);
-                }
-                if (inSameGroup(count1, count2)) {
-                    return 2;
-                }
-                count1 = resetZero(count1);
-                count2 = resetZero(count2);
-                for (String str : BW6) {
-                    count1 = count(str, a1, a11, count1);
-                    count2 = count(str, a2, a22, count2);
-                }
-                return getResult(count1, count2);
+                List list1 = new ArrayList();
+                List list2 = new ArrayList();
+                list1.add(getResult(isSameNumber(a1, a11, a22), isSameGroup(B5, a1, a11, a22)));
+                list1.add(getResult(isSameNumber(a1, a11, a22), isSameGroup(B8, a1, a11, a22)));
+                list1.add(getResult(isSameNumber(a1, a11, a22), isSameGroup(B7, a1, a11, a22)));
+                list1.add(getResult(isSameNumber(a1, a11, a22), isSameGroup(B12, a1, a11, a22)));
+                list1.add(getResult(isSameNumber(a1, a11, a22), isSameGroup(B17, a1, a11, a22)));
+                list1.add(getResult(isSameNumber(a1, a11, a22), isSameGroup(BW4, a1, a11, a22)));
+                list1.add(getResult(isSameNumber(a1, a11, a22), isSameGroup(BW6, a1, a11, a22)));
+
+                list2.add(getResult(isSameNumber(a2, a11, a22), isSameGroup(B5, a2, a11, a22)));
+                list2.add(getResult(isSameNumber(a2, a11, a22), isSameGroup(B8, a2, a11, a22)));
+                list2.add(getResult(isSameNumber(a2, a11, a22), isSameGroup(B7, a2, a11, a22)));
+                list2.add(getResult(isSameNumber(a2, a11, a22), isSameGroup(B12, a2, a11, a22)));
+                list2.add(getResult(isSameNumber(a2, a11, a22), isSameGroup(B17, a2, a11, a22)));
+                list2.add(getResult(isSameNumber(a2, a11, a22), isSameGroup(BW4, a2, a11, a22)));
+                list2.add(getResult(isSameNumber(a2, a11, a22), isSameGroup(BW6, a2, a11, a22)));
+                return getFormatResult(list1, list2);
             } else {
-                result = null;
+                return null;
             }
         } else if ("DQ".equals(type)) {
             if (isNotEmpty(a1) && isNotEmpty(a11) && isNotEmpty(a2) && isNotEmpty(a22)) {
-                int count1 = 0;
-                int count2 = 0;
-                for (String str : DQ1) {
-                    count1 = count(str, a1, a11, count1);
-                    count2 = count(str, a2, a22, count2);
-                }
-                if (inSameGroup(count1, count2)) {
-                    return 2;
-                }
-                count1 = resetZero(count1);
-                count2 = resetZero(count2);
-                for (String str : DQ2) {
-                    count1 = count(str, a1, a11, count1);
-                    count2 = count(str, a2, a22, count2);
-                }
-                if (inSameGroup(count1, count2)) {
-                    return 2;
-                }
-                count1 = resetZero(count1);
-                count2 = resetZero(count2);
-                for (String str : DQ3) {
-                    count1 = count(str, a1, a11, count1);
-                    count2 = count(str, a2, a22, count2);
-                }
-                if (inSameGroup(count1, count2)) {
-                    return 2;
-                }
-                count1 = resetZero(count1);
-                count2 = resetZero(count2);
-                for (String str : DQ4) {
-                    count1 = count(str, a1, a11, count1);
-                    count2 = count(str, a2, a22, count2);
-                }
-                return getResult(count1, count2);
+                List list1 = new ArrayList();
+                List list2 = new ArrayList();
+                list1.add(getResult(isSameNumber(a1, a11, a22), isSameGroup(DQ1, a1, a11, a22)));
+                list1.add(getResult(isSameNumber(a1, a11, a22), isSameGroup(DQ2, a1, a11, a22)));
+                list1.add(getResult(isSameNumber(a1, a11, a22), isSameGroup(DQ3, a1, a11, a22)));
+                list1.add(getResult(isSameNumber(a1, a11, a22), isSameGroup(DQ4, a1, a11, a22)));
+
+                list2.add(getResult(isSameNumber(a2, a11, a22), isSameGroup(DQ1, a2, a11, a22)));
+                list2.add(getResult(isSameNumber(a2, a11, a22), isSameGroup(DQ2, a2, a11, a22)));
+                list2.add(getResult(isSameNumber(a2, a11, a22), isSameGroup(DQ3, a2, a11, a22)));
+                list2.add(getResult(isSameNumber(a2, a11, a22), isSameGroup(DQ4, a2, a11, a22)));
+                return getFormatResult(list1, list2);
             } else {
-                result = null;
+                return null;
             }
         } else if ("DR".equals(type)) {
             if (isNotEmpty(a1) && isNotEmpty(a11) && isNotEmpty(a2) && isNotEmpty(a22)) {
-                int count1 = 0;
-                int count2 = 0;
-                for (String str : DRB3) {
-                    count1 = count(str, a1, a11, count1);
-                    count2 = count(str, a2, a22, count2);
-                }
-                if (inSameGroup(count1, count2)) {
-                    return 2;
-                }
-                count1 = resetZero(count1);
-                count2 = resetZero(count2);
-                for (String str : DRB4) {
-                    count1 = count(str, a1, a11, count1);
-                    count2 = count(str, a2, a22, count2);
-                }
-                if (inSameGroup(count1, count2)) {
-                    return 2;
-                }
-                count1 = resetZero(count1);
-                count2 = resetZero(count2);
-                for (String str : DRB5) {
-                    count1 = count(str, a1, a11, count1);
-                    count2 = count(str, a2, a22, count2);
-                }
-                return getResult(count1, count2);
+                List list1 = new ArrayList();
+                List list2 = new ArrayList();
+                list1.add(getResult(isSameNumber(a1, a11, a22), isSameGroup(DRB3, a1, a11, a22)));
+                list1.add(getResult(isSameNumber(a1, a11, a22), isSameGroup(DRB4, a1, a11, a22)));
+                list1.add(getResult(isSameNumber(a1, a11, a22), isSameGroup(DRB5, a1, a11, a22)));
+
+                list2.add(getResult(isSameNumber(a2, a11, a22), isSameGroup(DRB3, a2, a11, a22)));
+                list2.add(getResult(isSameNumber(a2, a11, a22), isSameGroup(DRB4, a2, a11, a22)));
+                list2.add(getResult(isSameNumber(a2, a11, a22), isSameGroup(DRB5, a2, a11, a22)));
+                return getFormatResult(list1, list2);
             } else {
-                result = null;
+                return null;
             }
         }
-        return result;
+        return null;
     }
 
 
     /**
      * 清除输入框(单点只清除受体，长按则全清除)
      */
+
     public void clearEditText(int type) {
         if (type == 2) {
             mA1EditText.setText("");
@@ -519,4 +405,84 @@ public class HLAActivity extends AppCompatActivity {
         }
         return count;
     }
+
+    /**
+     * 判断source是否与target相同
+     */
+    private boolean isSameNumber(String source, String target1, String target2) {
+        if (source.equals(target1) || source.equals(target2)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 判断source是否与target在同一分组
+     */
+    private boolean isSameGroup(String[] array, String source, String target1, String target2) {
+        boolean sourceResult = false;
+        boolean target1Result = false;
+        boolean target2Result = false;
+        for (String str : array) {
+            if (str.equals(source)) {
+                sourceResult = true;
+                continue;
+            }
+        }
+        for (String str : array) {
+            if (str.equals(target1)) {
+                target1Result = true;
+                continue;
+            }
+        }
+        for (String str : array) {
+            if (str.equals(target2)) {
+                target2Result = true;
+                continue;
+            }
+        }
+        if ((target1Result || target2Result) && sourceResult) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 配对规则:即每个位点内两个数值交叉比较，例如供着A位点（供A1，供A2），受者A位点（受A1，受A2）供A１与受A1及受Ａ２比较，
+     * 若供Ａ１与受A1或受A2两者任一项数值完全一样则给与对号反馈，
+     * 若供Ａ１与受Ａ１及受A２任一符合原数据库同一组交叉反应原则（及数值不同但两个数值在原数据库的同一个分组）则给与对叉号反馈，
+     * 若供Ａ１与受Ａ１和受A２数值不同且也不在数据库同一分组，则给与叉号反馈；同理供Ａ２位点如上亦和受Ａ１及Ａ２比较
+     */
+    private String getResult(boolean isSameNumber, boolean isSameGroup) {
+        if (isSameNumber) {
+            return "√";
+        }
+        if (isSameGroup) {
+            return "√×";
+        }
+        return "×";
+    }
+
+    private String getFormatResult(List<String> list1, List<String> list2) {
+        String r1 = "×";
+        String r2 = "×";
+        for (String str : list1) {
+            if ("√".equals(str)) {
+                r1 = str;
+            }
+            if ("√×".equals(str)) {
+                r1 = str;
+            }
+        }
+        for (String str : list2) {
+            if ("√".equals(str)) {
+                r2 = str;
+            }
+            if ("√×".equals(str)) {
+                r2 = str;
+            }
+        }
+        return "( " + r1 + ", " + r2 + " )";
+    }
+
 }

@@ -7,6 +7,10 @@
     <string name="st_text">受体</string>
     <string name="about">关于</string>
     <string name="ok">确定</string>
-    <string name="about_text">HLA配型(Version 1.04)</string>
+    <string name="about_text">HLA配型(Version 1.041)</string>
     <string name="me_text"></string>
+    <string name="right">√</string>
+    <string name="wrong">×</string>
+    <string name="wrong_right">×√</string>
+    <string name="double_wrong">××</string>
 </resources>
